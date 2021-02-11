@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Лучший чат</title>
+
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+        crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+  {% block extra_css %}{% endblock %}
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+<header class="header">
+  <div class="{% block header_container_class %}container-xl{% endblock %}">
+    <div class="header__profile">
+      <img
+              class="header__profile__img"
+              src="{% static 'images/user.svg' %}"
+              alt="userpic"
+      />
+      <span class="header__profile__bio">Александр Иванов</span>
+    </div>
+
+    <div class="header__controls">
+      <a class="header__controls__link" href="#">Профиль</a>
+      <a class="header__controls__link" href="#">Выйти</a>
+    </div>
+  </div>
+</header>
+{% block main %}{% endblock %}
+</body>
+</html>
