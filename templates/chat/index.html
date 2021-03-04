@@ -10,8 +10,8 @@
   <div class="main">
     <div class="container-xl">
       {% for section in sections %}
-        {% static section.image_url as image_url %}
-        {% include 'chat/chat_section_card.html' with link=section.link name=section.name image_alt=section.name %}
+        {% url 'section' section.id as link %}
+        {% include 'chat/section_card.html' with image_url=section.image.url name=section.title image_alt=section.title %}
       {% endfor %}
 
       <div class="main__section main__section-hidden"></div>

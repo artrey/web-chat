@@ -3,5 +3,7 @@
 {% block header_container_class %}container-fluid{% endblock %}
 
 {% block main %}
-  in chat: {{ chat_id }}
+  {% for conversation in conversations %}
+    {{ conversation }}<br/>
+  {% endfor %}
 {% endblock %}
