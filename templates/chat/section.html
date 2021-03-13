@@ -6,4 +6,10 @@
   {% for conversation in conversations %}
     {{ conversation }}<br/>
   {% endfor %}
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="message" aria-label="message" required>
+    <button type="submit">Создать</button>
+  </form>
 {% endblock %}

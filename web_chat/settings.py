@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,12 +20,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'gy_ipt_&u1pv=+@5^eu-&q#_78m9l%$!y#(r*pt15h2kjp#u5t'
+SECRET_KEY = config('SECRET_KEY', default='the-best-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+
+def comma_separated_list(value: str) -> list:
+    return [x.strip() for x in value.split(',') if x.strip()]
+
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=comma_separated_list)
 
 # Application definition
 
@@ -77,8 +83,13 @@ WSGI_APPLICATION = 'web_chat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('POSTGRES_DB', default='webchat'),
+        'USER': config('POSTGRES_USER', default='webchat'),
+        'PASSWORD': config('POSTGRES_PASSWORD', default='webchat'),
+        'HOST': config('POSTGRES_HOST', default='localhost'),
+        'PORT': config('POSTGRES_PORT', default=5432, cast=int),
+        'ATOMIC_REQUESTS': True,
     }
 }
 
@@ -126,8 +137,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 if DEBUG:
-    import os
-
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -143,7 +152,7 @@ if DEBUG:
         'loggers': {
             'django.db': {
                 'handlers': ['console'],
-                'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+                'level': config('DJANGO_LOG_LEVEL', default='DEBUG'),
                 'propagate': False,
             },
         },

@@ -1,9 +1,21 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
 
 from apps.chat.models import *
 
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('login')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        login(request, user)
+        return redirect('index')
+    return render(request, 'auth/login.html')
+
+
 def index_view(request):
+    print(request.user)
     context = {
         'sections': Section.objects.all(),
     }
@@ -11,9 +23,9 @@ def index_view(request):
 
 
 def section_view(request, section_id):
-    text = request.GET.get('text')
-    if text:
-        Conversation.objects.create(text=text, section_id=section_id, user_id=1)
+    if request.method == 'POST':
+        message = request.POST.get('message')
+        Conversation.objects.create(text=message, section_id=section_id, user_id=1)
 
     conversations = Conversation.objects.filter(section_id=section_id)
     context = {
