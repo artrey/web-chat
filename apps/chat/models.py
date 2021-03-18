@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from apps.accounts.models import User
+from apps.account.models import User
 
 
 class Section(models.Model):

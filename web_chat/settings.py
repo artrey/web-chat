@@ -42,11 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.accounts',
+    'apps.account',
     'apps.chat',
 ]
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'account.User'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 MIDDLEWARE = [
