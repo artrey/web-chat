@@ -88,8 +88,13 @@ WSGI_APPLICATION = 'web_chat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3'
+        'ENGINE': config('DB_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': config('DB_NAME', default=BASE_DIR / 'db.sqlite3'),
+        'USER': config('DB_USER', default='webchat'),
+        'PASSWORD': config('DB_PASSWORD', default='webchat'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default=5432, cast=int),
+        'ATOMIC_REQUESTS': True,
     }
 }
 
@@ -137,6 +142,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 if DEBUG:
+    ALLOWED_HOSTS = '*'
+
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,

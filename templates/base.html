@@ -26,12 +26,17 @@
               src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'images/user.svg' %}{% endif %}"
               alt="userpic"
       />
-      <span class="header__profile__bio">{{ user.first_name }} {{ user.last_name }}</span>
+      <span class="header__profile__bio">{{ user.get_full_name|default:user.username }}</span>
     </a>
 
     <div class="header__controls">
       <a class="header__controls__link" href="{% url 'index' %}">Главная</a>
-      <a class="header__controls__link" href="{% url 'logout' %}">Выйти</a>
+      {% if user.is_anonymous %}
+        <a class="header__controls__link" href="{% url 'login' %}">Войти</a>
+        <a class="header__controls__link" href="{% url 'django_registration_register' %}">Регистрация</a>
+      {% else %}
+        <a class="header__controls__link" href="{% url 'logout' %}">Выйти</a>
+      {% endif %}
     </div>
   </div>
 </header>
