@@ -1,10 +1,9 @@
 from django.shortcuts import render
 
-from apps.chat.models import *
+from apps.chat.models import Conversation, Section
 
 
 def index_view(request):
-    print(request.user)
     context = {
         'sections': Section.objects.all(),
     }

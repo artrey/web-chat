@@ -20,18 +20,18 @@
 <body>
 <header class="header">
   <div class="{% block header_container_class %}container-xl{% endblock %}">
-    <div class="header__profile">
+    <a href="{% url 'profile' %}" class="header__profile">
       <img
               class="header__profile__img"
-              src="{% static 'images/user.svg' %}"
+              src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'images/user.svg' %}{% endif %}"
               alt="userpic"
       />
-      <span class="header__profile__bio">Александр Иванов</span>
-    </div>
+      <span class="header__profile__bio">{{ user.first_name }} {{ user.last_name }}</span>
+    </a>
 
     <div class="header__controls">
-      <a class="header__controls__link" href="#">Профиль</a>
-      <a class="header__controls__link" href="#">Выйти</a>
+      <a class="header__controls__link" href="{% url 'index' %}">Главная</a>
+      <a class="header__controls__link" href="{% url 'logout' %}">Выйти</a>
     </div>
   </div>
 </header>
