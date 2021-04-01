@@ -1,15 +1,46 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block header_container_class %}container-fluid{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/chat/section.css' %}"/>
+{% endblock %}
 
 {% block main %}
-  {% for conversation in conversations %}
-    {{ conversation }}<br/>
-  {% endfor %}
+  <div class="section-container">
+    <div class="section-container__left">
+      {% for conversation in conversations %}
+        <a href="?conversation={{ conversation.id }}">{{ conversation }}</a><br/>
+      {% endfor %}
 
-  <form method="post">
-    {% csrf_token %}
-    <input type="text" name="message" aria-label="message" required>
-    <button type="submit">Создать</button>
-  </form>
+      {% if user.is_authenticated %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="form" value="conversation">
+          {{ conversation_form }}
+          <button type="submit">Добавить</button>
+        </form>
+      {% else %}
+        Войдите в систему, чтобы отправлять сообщения
+      {% endif %}
+    </div>
+
+    <div class="section-container__right">
+      {% if conversation_id %}
+        {% for message in messages %}
+          {{ message }}<br/>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="form" value="message">
+            {{ message_form }}
+            <button type="submit">Добавить</button>
+          </form>
+        {% else %}
+          Войдите в систему, чтобы отправлять сообщения
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

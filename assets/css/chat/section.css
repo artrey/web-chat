@@ -1,0 +1,8 @@
+.section-container {
+  display: flex;
+}
+
+.section-container__left,
+.section-container__right {
+  width: 50%;
+}

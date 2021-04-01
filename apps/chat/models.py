@@ -37,3 +37,7 @@ class Message(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        author = self.user.get_full_name() or self.user.username
+        return f'{author}: {self.text} | {self.created_at}'
