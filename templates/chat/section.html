@@ -7,10 +7,12 @@
 
 {% block main %}
   <div class="section-container">
-    <div class="section-container__left">
-      {% for conversation in conversations %}
-        <a href="?conversation={{ conversation.id }}">{{ conversation }}</a><br/>
-      {% endfor %}
+    <div class="section-container__common section-container__left">
+      <div class="message-list">
+        {% for conversation in conversations %}
+          <a href="?conversation={{ conversation.id }}">{{ conversation }}</a><br/>
+        {% endfor %}
+      </div>
 
       {% if user.is_authenticated %}
         <form method="post">
@@ -24,11 +26,13 @@
       {% endif %}
     </div>
 
-    <div class="section-container__right">
+    <div class="section-container__common section-container__right">
       {% if conversation_id %}
-        {% for message in messages %}
-          {{ message }}<br/>
-        {% endfor %}
+        <div class="message-list">
+          {% for message in messages %}
+            {{ message }}<br/>
+          {% endfor %}
+        </div>
 
         {% if user.is_authenticated %}
           <form method="post">

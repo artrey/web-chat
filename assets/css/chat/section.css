@@ -1,8 +1,16 @@
 .section-container {
   display: flex;
+  flex-grow: 1;
 }
 
-.section-container__left,
-.section-container__right {
+.section-container__common {
   width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 0;
 }
