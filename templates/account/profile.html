@@ -1,14 +1,30 @@
 {% extends 'base.html' %}
 
+{% load gravatar %}
+
 {% block main %}
   <div class="container-xl">
     {% if user.avatar %}
-      <img src="{{ user.avatar.url }}" alt="userpic"/>
+      <img src="{{ user.avatar.url }}" alt="userpic" height="200"/>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="avatar-clear" value="on"/>
+        {{ form.email.as_hidden }}
+        {{ form.first_name.as_hidden }}
+        {{ form.last_name.as_hidden }}
+        <button type="submit">Удалить фото</button>
+      </form>
+    {% elif user.email %}
+      {% gravatar user.email 200 %}
     {% endif %}
 
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      {{ form.as_p }}
+      <input type="file" name="avatar" accept="image/*"/>
+      {{ form.email }}
+      {{ form.first_name }}
+      {{ form.last_name }}
       <button type="submit">Сохранить</button>
     </form>
   </div>
