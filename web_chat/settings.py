@@ -10,10 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
-from decouple import config
 from django.urls import reverse_lazy
+from dotenv import load_dotenv
 import django_heroku
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,17 +25,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='the-best-secret-key')
+SECRET_KEY = os.getenv('SECRET_KEY', default='the-best-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = os.getenv('DEBUG', default=False)
 
 
 def comma_separated_list(value: str) -> list:
     return [x.strip() for x in value.split(',') if x.strip()]
 
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=comma_separated_list)
+ALLOWED_HOSTS = comma_separated_list(os.getenv('ALLOWED_HOSTS', default=''))
 
 # Application definition
 
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'account.User'
+LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 REGISTRATION_OPEN = True
@@ -89,15 +93,16 @@ WSGI_APPLICATION = 'web_chat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': config('DB_ENGINE', default='django.db.backends.sqlite3'),
-        'NAME': config('DB_NAME', default=BASE_DIR / 'db.sqlite3'),
-        'USER': config('DB_USER', default='webchat'),
-        'PASSWORD': config('DB_PASSWORD', default='webchat'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default=5432, cast=int),
+        'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': os.getenv('DB_NAME', default=BASE_DIR / 'db.sqlite3'),
+        'USER': os.getenv('DB_USER', default='webchat'),
+        'PASSWORD': os.getenv('DB_PASSWORD', default='webchat'),
+        'HOST': os.getenv('DB_HOST', default='localhost'),
+        'PORT': int(os.getenv('DB_PORT', default=5432)),
         'ATOMIC_REQUESTS': True,
     }
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -162,7 +167,7 @@ if DEBUG:
         'loggers': {
             'django.db': {
                 'handlers': ['console'],
-                'level': config('DJANGO_LOG_LEVEL', default='DEBUG'),
+                'level': os.getenv('DJANGO_LOG_LEVEL', default='DEBUG'),
                 'propagate': False,
             },
         },

@@ -1,8 +1,8 @@
 django
 pillow
 defusedxml
-python-decouple
 psycopg2-binary
 django-registration
 gunicorn
 django-heroku
+python-dotenv

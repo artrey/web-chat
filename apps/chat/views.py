@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
 from apps.chat.forms import ConversationForm, MessageForm
@@ -46,6 +48,7 @@ class SectionView(TemplateView):
         })
         return context
 
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form_type = request.POST.get('form')
 
@@ -63,9 +66,7 @@ class SectionView(TemplateView):
 
     def _process_form(self, form_class, on_valid):
         form = form_class(self.request.POST)
-        if self.request.user.is_anonymous:
-            form.add_error(None, 'Вы не вошли в систему')
-        elif form.is_valid():
+        if form.is_valid():
             on_valid(form)
         return form
 
