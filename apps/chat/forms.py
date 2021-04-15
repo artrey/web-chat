@@ -1,7 +1,7 @@
 from django import forms
+from django_svg_image_form_field import SvgAndImageFormField
 
 from apps.chat.models import Conversation, Message, Section
-from apps.chat.svg_image_field import SvgAndImageFormField
 
 
 class SectionForm(forms.ModelForm):

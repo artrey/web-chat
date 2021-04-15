@@ -6,3 +6,4 @@ django-registration
 gunicorn
 django-heroku
 python-dotenv
+django-svg-image-form-field
