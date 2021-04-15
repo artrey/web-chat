@@ -6,6 +6,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: rgba(197, 142, 241, 0.13);
 }
 
 .header {
