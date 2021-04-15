@@ -1,4 +1,5 @@
 {% load static %}
+{% load gravatar %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +24,7 @@
     <a href="{% url 'profile' %}" class="header__profile">
       <img
               class="header__profile__img"
-              src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'images/user.svg' %}{% endif %}"
+              src="{% if user.avatar %}{{ user.avatar.url }}{% elif user.email %}{% gravatar_url user.email 50 %}{% else %}{% static 'images/user.svg' %}{% endif %}"
               alt="userpic"
       />
       <span class="header__profile__bio">{{ user.get_full_name|default:user.username }}</span>

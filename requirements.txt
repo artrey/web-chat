@@ -7,3 +7,4 @@ gunicorn
 django-heroku
 python-dotenv
 django-svg-image-form-field
+django-gravatar2
