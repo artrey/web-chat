@@ -17,10 +17,10 @@
       <img src="{{ user.avatar.url }}" alt="userpic" height="200"/>
     {% endif %}
 
-    <form method="post" enctype="multipart/form-data">
+    <form class="profile-form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
 
-      <div class="profile-row">
+      <div class="profile-row profile-bio">
         <div class="form-block-half">
           <label class="form-label">
             Имя

@@ -12,6 +12,10 @@
   background-color: rgba(70, 26, 105, 0.67);
 }
 
+.profile-form {
+  margin-top: 20px;
+}
+
 .profile-row {
   display: flex;
 }
@@ -24,7 +28,7 @@
 
 .form-block-half {
   display: flex;
-  width: 50%;
+  width: 100%;
 }
 
 .form-label {
@@ -55,4 +59,11 @@
   border-radius: 30px;
   border: none;
   padding: 6px 30px;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .profile-bio {
+    flex-direction: column;
+  }
 }
