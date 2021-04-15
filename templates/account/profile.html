@@ -20,6 +20,12 @@
     <form class="profile-form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
 
+      {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+          <span class="form-field-error">{{ error|escape }}</span>
+        {% endfor %}
+      {% endif %}
+
       <div class="profile-row profile-bio">
         <div class="form-block-half">
           <label class="form-label">
@@ -30,6 +36,7 @@
                    placeholder="Имя"
                    value="{{ form.first_name.value }}"
                    maxlength="150">
+            {% include 'account/form_field_errors.html' with field=form.first_name %}
           </label>
         </div>
         <div class="form-block-half">
@@ -41,6 +48,7 @@
                    placeholder="Фамилия"
                    value="{{ form.last_name.value }}"
                    maxlength="150">
+            {% include 'account/form_field_errors.html' with field=form.last_name %}
           </label>
         </div>
       </div>
@@ -54,6 +62,7 @@
                  placeholder="Адрес электронной почты"
                  value="{{ form.email.value }}"
                  maxlength="150">
+          {% include 'account/form_field_errors.html' with field=form.email %}
         </label>
       </div>
 

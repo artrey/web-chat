@@ -48,8 +48,8 @@
   width: 100%;
 }
 
-.form-block:active, .form-block:focus {
-  outline: none;
+.form-field-error {
+  color: indianred;
 }
 
 .form-button {
@@ -60,6 +60,11 @@
   border: none;
   padding: 6px 30px;
   margin-top: 20px;
+}
+
+.form-block:active, .form-block:focus,
+.form-button:active, .form-button:focus {
+  outline: none;
 }
 
 @media screen and (max-width: 600px) {
