@@ -10,7 +10,7 @@
     <div class="section-container__common section-container__left">
       <div class="message-list">
         {% for conversation in conversations %}
-          <a href="?conversation={{ conversation.id }}">{{ conversation }}</a><br/>
+          <a href="?conversation={{ conversation.id }}">{{ conversation|linebreaksbr }}</a><br/>
         {% endfor %}
       </div>
 
@@ -30,7 +30,7 @@
       {% if conversation_id %}
         <div class="message-list">
           {% for message in messages %}
-            {{ message }}<br/>
+            {{ message|linebreaksbr }}<br/>
           {% endfor %}
         </div>
 
