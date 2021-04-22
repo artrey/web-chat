@@ -72,6 +72,7 @@
   border-radius: 16px;
   border: 1px solid #83649B;
   padding: 0 8px;
+  overflow: hidden;
 }
 
 .message-form__input:active, .message-form__input:focus {
