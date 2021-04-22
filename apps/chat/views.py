@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
@@ -25,6 +25,12 @@ class SectionView(TemplateView):
     def conversation_id(self):
         return self.request.GET.get('conversation')
 
+    @property
+    def conversation(self):
+        if not self.conversation_id:
+            return None
+        return get_object_or_404(Conversation, id=self.conversation_id)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -39,9 +45,10 @@ class SectionView(TemplateView):
         message_form = kwargs.get('message_form', MessageForm())
 
         context.update({
-            'section_id': self.section_id,
+            'section': get_object_or_404(Section, id=self.section_id),
             'conversations': conversations,
             'conversation_id': self.conversation_id,
+            'conversation': self.conversation,
             'messages': messages,
             'conversation_form': conversation_form,
             'message_form': message_form,
