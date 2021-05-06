@@ -3,9 +3,12 @@
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/chat/section.css' %}"/>
+  <link rel="stylesheet" href="{% static 'css/chat/message.css' %}"/>
 {% endblock %}
 
 {% block extra_js %}
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="{% static 'js/chat/section.js' %}"></script>
 {% endblock %}
 
@@ -22,7 +25,9 @@
 
       <div class="message-list">
         {% for conversation in conversations %}
-          <a href="?conversation={{ conversation.id }}">{{ conversation|linebreaksbr }}</a><br/>
+          {% include 'chat/message.html' with message=conversation conversation_id=conversation.id %}
+        {% empty %}
+          Еще никто ничего не писал здесь.
         {% endfor %}
       </div>
 
@@ -37,7 +42,9 @@
 
         <div class="message-list">
           {% for message in messages %}
-            {{ message|linebreaksbr }}<br/>
+            {% include 'chat/message.html' %}
+          {% empty %}
+            Еще никто ничего не писал здесь.
           {% endfor %}
         </div>
 

@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+  for (const dt of document.querySelectorAll('.message__header__time')) {
+    const utcTime = moment.utc(dt.innerHTML).toDate();
+    dt.innerHTML = moment(utcTime).local().format('DD.MM.YYYY HH:mm:ss');
+  }
+
   for (const textarea of document.querySelectorAll('textarea')) {
     const textareaCopy = textarea;
     textarea.onkeydown = function (e) {
